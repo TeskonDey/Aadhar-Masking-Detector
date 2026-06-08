@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 import logging
 
 from core.document_ingestion import process_image_bytes, process_pdf_bytes
@@ -14,6 +14,7 @@ app = FastAPI(title="Aadhaar Masking Detector API", version="1.0.0")
 @app.post("/api/v1/verify-aadhaar")
 async def verify_aadhaar_document(file: UploadFile = File(...)):
     logger.info(f"Processing file '{file.filename}' of type '{file.content_type}'")
+
     
     try:
         file_bytes = await file.read()
